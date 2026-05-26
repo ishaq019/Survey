@@ -2,6 +2,7 @@
   "name": "survey-application-frontend",
   "version": "1.0.0",
   "type": "module",
+  "homepage": "https://syedishaq.me/survey",
   "scripts": {
     "dev": "vite --port 5173",
     "build": "vite build",
