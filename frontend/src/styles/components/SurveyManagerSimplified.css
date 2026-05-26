@@ -1,0 +1,508 @@
+/* ── Survey Manager Simplified - User Friendly ──────────────────────────────────── */
+
+.survey-manager-simplified {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: var(--space-lg);
+}
+
+.card {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────────── */
+
+.manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, rgba(37, 99, 235, 0.8) 100%);
+  color: white;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.manager-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+}
+
+.header-desc {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+  color: white;
+}
+
+.manager-header .text-link {
+  color: white;
+  opacity: 0.9;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.manager-header .text-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ── Quick Status ──────────────────────────────────────────────────────────────────────── */
+
+.quick-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 0;
+}
+
+.status-item {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.status-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.status-badge.ready {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.status-badge.empty {
+  background: rgba(107, 114, 128, 0.15);
+  color: var(--muted);
+}
+
+/* ── Integration Links Grid ──────────────────────────────────────────────────────────────────────── */
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.link-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--surface-2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.link-button:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.link-icon {
+  font-size: 24px;
+  min-width: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.link-hint {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.link-button:hover .link-hint {
+  opacity: 0.9;
+}
+
+/* ── Tab Navigation ──────────────────────────────────────────────────────────────────────── */
+
+.tab-nav-simple {
+  display: flex;
+  gap: 12px;
+  border-bottom: 2px solid var(--border);
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 18px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.tab-button:hover {
+  color: var(--primary);
+  border-bottom-color: rgba(37, 99, 235, 0.3);
+}
+
+.tab-button.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tab-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tab-status {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tab-status.configured {
+  color: #10b981;
+}
+
+.tab-status.pending {
+  color: var(--warning);
+}
+
+/* ── Create Section ──────────────────────────────────────────────────────────────────────── */
+
+.create-section {
+  padding: 24px;
+  background: rgba(37, 99, 235, 0.05);
+  border: 2px dashed var(--primary);
+  border-radius: 12px;
+}
+
+.create-section h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.section-desc {
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.create-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-create {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.btn-create:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: rgba(37, 99, 235, 0.05);
+  transform: translateX(2px);
+}
+
+.btn-create.primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-create.primary:hover {
+  opacity: 0.85;
+}
+
+.btn-create:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-emoji {
+  font-size: 16px;
+}
+
+/* ── Template Section ──────────────────────────────────────────────────────────────────────── */
+
+.template-section {
+  padding: 24px;
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.template-header h2 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.template-header .section-desc {
+  margin: 0;
+}
+
+/* ── Empty Template ──────────────────────────────────────────────────────────────────────── */
+
+.empty-template {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-template h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.empty-template p {
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── Danger Confirmation ──────────────────────────────────────────────────────────────────────── */
+
+.danger-confirm {
+  background: rgba(239, 68, 68, 0.05);
+  border: 2px solid rgba(239, 68, 68, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.danger-confirm h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--error);
+}
+
+.danger-confirm p {
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--muted);
+}
+
+.btn-danger {
+  padding: 8px 16px;
+  background: var(--error);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.2s;
+}
+
+.btn-danger:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .survey-manager-simplified {
+    padding: var(--space-md);
+    gap: 12px;
+  }
+
+  .manager-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quick-status {
+    grid-template-columns: 1fr;
+  }
+
+  .links-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tab-nav-simple {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    padding: 12px;
+  }
+
+  .tab-button.active {
+    border-left: 3px solid var(--primary);
+    border-bottom-color: transparent;
+    padding-left: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .manager-header {
+    padding: 16px;
+  }
+
+  .manager-header h1 {
+    font-size: 22px;
+  }
+
+  .quick-status {
+    grid-template-columns: 1fr;
+  }
+
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .create-buttons {
+    gap: 8px;
+  }
+
+  .btn-create {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .template-header {
+    flex-direction: column;
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+  }
+
+  .confirm-actions button {
+    width: 100%;
+  }
+}
