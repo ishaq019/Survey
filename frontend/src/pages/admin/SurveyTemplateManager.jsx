@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import Loader from '../../components/Loader';
 import SimpleSurveyTemplateForm from '../../components/survey/SimpleSurveyTemplateForm';
+import { QUIZ_APP_URL } from '../../config/api';
 import {
   createDefaultTemplates,
   fetchTemplates,

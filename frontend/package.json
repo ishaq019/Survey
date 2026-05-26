@@ -10,7 +10,7 @@
     "lint:fix": "eslint src --fix --ext .js,.jsx",
     "format": "prettier --write .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build"
   },
   "dependencies": {
     "@tiptap/extension-link": "^3.23.5",

@@ -8,7 +8,7 @@ const normalizeBasePath = (value) => {
   return `/${raw.replace(/^\/+|\/+$/g, '')}`;
 };
 
-export const APP_BASE_PATH = normalizeBasePath('/survey');
+export const APP_BASE_PATH = normalizeBasePath(import.meta.env.VITE_APP_BASE_PATH || '/survey');
 
 export const buildAppPath = (path = '') => {
   const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';

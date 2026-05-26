@@ -1,3 +1,5 @@
+const QUIZ_APP_URL = 'https://ishaq019.github.io/quiz-application';
+
 export const getReturnUrl = (fallbackPath = '/') => {
   const params = new URLSearchParams(window.location.search);
   const returnUrl = params.get('returnUrl');
@@ -10,7 +12,7 @@ export const getReturnUrl = (fallbackPath = '/') => {
     }
   }
 
-  return new URL(fallbackPath, window.location.origin).toString();
+  return new URL(fallbackPath, QUIZ_APP_URL).toString();
 };
 
 export const redirectToReturnUrl = (fallbackPath = '/') => {
