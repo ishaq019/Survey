@@ -45,10 +45,10 @@ jobs:
         working-directory: frontend
         run: |
           rm -rf pages
-          mkdir -p pages/survey
-          cp -R dist/. pages/survey/
-          cp pages/survey/index.html pages/survey/404.html
-          cp pages/survey/index.html pages/404.html
+          mkdir -p pages/Surevy
+          cp -R dist/. pages/Surevy/
+          cp pages/Surevy/index.html pages/Surevy/404.html
+          cp pages/Surevy/index.html pages/404.html
           echo "syedishaq.me" > pages/CNAME
 
       - name: Configure GitHub Pages
