@@ -39,16 +39,16 @@ jobs:
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_QUIZ_APP_URL: ${{ vars.VITE_QUIZ_APP_URL }}
-          VITE_APP_BASE_PATH: /Surevy
+          VITE_APP_BASE_PATH: /survey
 
       - name: Prepare GitHub Pages artifact
         working-directory: frontend
         run: |
           rm -rf pages
-          mkdir -p pages/Surevy
-          cp -R dist/. pages/Surevy/
-          cp pages/Surevy/index.html pages/Surevy/404.html
-          cp pages/Surevy/index.html pages/404.html
+          mkdir -p pages/survey
+          cp -R dist/. pages/survey/
+          cp pages/survey/index.html pages/survey/404.html
+          cp pages/survey/index.html pages/404.html
           echo "syedishaq.me" > pages/CNAME
 
       - name: Configure GitHub Pages
