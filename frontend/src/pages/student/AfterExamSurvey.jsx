@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -6,8 +6,6 @@ import Loader from '../../components/Loader';
 import EnhancedSurveyRenderer from '../../components/survey/EnhancedSurveyRenderer';
 import { fetchStudentSurvey, submitStudentSurvey } from '../../services/surveyApi';
 import { redirectToReturnUrl } from '../../utils/returnUrl';
-
-const DEFAULT_DIFFICULTY_OPTIONS = ['Very Easy', 'Easy', 'Moderate', 'Difficult', 'Very Difficult'];
 
 export default function AfterExamSurvey() {
   const { examId } = useParams();
@@ -26,18 +24,14 @@ export default function AfterExamSurvey() {
   const canRenderPostSurvey = useCallback((payload) => {
     const template = payload?.template;
     const hasTemplateQuestions = Boolean(template?.questions?.length);
-    const hasQuestionReview = Boolean(
-      template?.questionReviewConfig?.enabled
-    );
+    const hasQuestionReview = Boolean(template?.questionReviewConfig?.enabled);
 
     return Boolean(template && (hasTemplateQuestions || hasQuestionReview));
   }, []);
 
-  // Load initial survey data
   useEffect(() => {
     const loadSurvey = async () => {
       try {
-        // First load: don't fetch questions yet (optional)
         const res = await fetchStudentSurvey(examId, 'postExam', false);
 
         if (res.data?.alreadySubmitted) {
@@ -52,8 +46,7 @@ export default function AfterExamSurvey() {
         }
 
         setSurveyData(res.data);
-        
-        // If question review is enabled, set up to fetch questions one at a time
+
         if (res.data?.questionReviewEnabled) {
           setTotalQuestions(res.data?.totalQuestions || 0);
         }
@@ -70,7 +63,6 @@ export default function AfterExamSurvey() {
     }
   }, [canRenderPostSurvey, examId, goToResult]);
 
-  // Load current question when index changes
   useEffect(() => {
     if (
       surveyData?.questionReviewEnabled &&
@@ -79,13 +71,14 @@ export default function AfterExamSurvey() {
     ) {
       const loadQuestion = async () => {
         setQuestionsLoading(true);
+
         try {
           const res = await fetchStudentSurvey(examId, 'postExam', true, currentQuestionIndex);
+
           if (res.data?.examQuestion) {
             setCurrentQuestion(res.data.examQuestion);
           }
-        } catch (error) {
-          console.error('Failed to load question:', error);
+        } catch (_error) {
           toast.error('Failed to load next question');
         } finally {
           setQuestionsLoading(false);
@@ -97,12 +90,6 @@ export default function AfterExamSurvey() {
   }, [currentQuestionIndex, totalQuestions, surveyData?.questionReviewEnabled, examId]);
 
   const questionReviewConfig = surveyData?.template?.questionReviewConfig || {};
-
-  const difficultyOptions = useMemo(() => {
-    return questionReviewConfig.difficultyOptions?.length
-      ? questionReviewConfig.difficultyOptions
-      : DEFAULT_DIFFICULTY_OPTIONS;
-  }, [questionReviewConfig.difficultyOptions]);
 
   const updateQuestionReview = (questionId, patch) => {
     setQuestionReviews((old) => ({
@@ -135,24 +122,24 @@ export default function AfterExamSurvey() {
         value,
       }));
 
-      // Build question reviews from collected data
       const questionReviewsPayload = [];
+
       if (surveyData?.questionReviewEnabled && totalQuestions > 0) {
-        // Collect reviews for all questions we have data for
-        for (let i = 0; i < totalQuestions; i++) {
-          // Fetch each question to get its ID for the payload
+        for (let i = 0; i < totalQuestions; i += 1) {
           try {
             const res = await fetchStudentSurvey(examId, 'postExam', true, i);
+
             if (res.data?.examQuestion) {
-              const qId = res.data.examQuestion._id;
+              const questionId = res.data.examQuestion._id;
+
               questionReviewsPayload.push({
-                questionId: qId,
-                difficulty: questionReviews[qId]?.difficulty || '',
-                reviewText: questionReviews[qId]?.reviewText || '',
+                questionId,
+                difficulty: questionReviews[questionId]?.difficulty || '',
+                reviewText: questionReviews[questionId]?.reviewText || '',
               });
             }
-          } catch (_e) {
-            // Skip if unable to load question
+          } catch (_error) {
+            // Skip question review if this question fails to load.
           }
         }
       }
@@ -178,6 +165,7 @@ export default function AfterExamSurvey() {
       <div className="card">
         <h3>Post-exam survey unavailable</h3>
         <p className="muted">You can continue to your result.</p>
+
         <button type="button" onClick={goToResult}>
           View Result
         </button>
@@ -186,23 +174,21 @@ export default function AfterExamSurvey() {
   }
 
   return (
-    <>
-      <EnhancedSurveyRenderer
-        template={surveyData.template}
-        submitButtonText="Submit Survey & View Result"
-        onSubmit={handleSubmit}
-        showProgress={true}
-        autoSave={true}
-        questionReviews={questionReviews}
-        currentQuestion={currentQuestion}
-        totalQuestions={totalQuestions}
-        currentQuestionIndex={currentQuestionIndex}
-        questionReviewConfig={questionReviewConfig}
-        onQuestionReviewChange={updateQuestionReview}
-        onPreviousQuestion={handlePreviousQuestion}
-        onNextQuestion={handleNextQuestion}
-        questionsLoading={questionsLoading}
-      />
-    </>
+    <EnhancedSurveyRenderer
+      template={surveyData.template}
+      submitButtonText="Submit Survey & View Result"
+      onSubmit={handleSubmit}
+      showProgress={true}
+      autoSave={true}
+      questionReviews={questionReviews}
+      currentQuestion={currentQuestion}
+      totalQuestions={totalQuestions}
+      currentQuestionIndex={currentQuestionIndex}
+      questionReviewConfig={questionReviewConfig}
+      onQuestionReviewChange={updateQuestionReview}
+      onPreviousQuestion={handlePreviousQuestion}
+      onNextQuestion={handleNextQuestion}
+      questionsLoading={questionsLoading}
+    />
   );
 }

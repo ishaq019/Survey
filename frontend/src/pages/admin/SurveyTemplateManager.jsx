@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 
 import Loader from '../../components/Loader';
 import SimpleSurveyTemplateForm from '../../components/survey/SimpleSurveyTemplateForm';
-import { QUIZ_APP_URL } from '../../config/api';
 import {
   createDefaultTemplates,
   fetchTemplates,
@@ -74,18 +73,22 @@ export default function SurveyTemplateManager() {
 
     const autoCreateTemplates = async () => {
       setLoadingDefaults(true);
+
       try {
         await createDefaultTemplates(examId, {
           preExamEnabled,
           postExamEnabled,
         });
+
         toast.success('Survey templates created');
         await loadTemplates();
 
         params.delete('autoCreate');
         params.delete('preExamEnabled');
         params.delete('postExamEnabled');
+
         const cleanQuery = params.toString();
+
         window.history.replaceState(
           {},
           document.title,
@@ -114,6 +117,7 @@ export default function SurveyTemplateManager() {
   }, [normalizedTemplates, activeTab]);
 
   const hasPreTemplate = normalizedTemplates.some((template) => template.surveyType === 'preExam');
+
   const hasPostTemplate = normalizedTemplates.some(
     (template) => template.surveyType === 'postExam'
   );
@@ -181,6 +185,7 @@ export default function SurveyTemplateManager() {
 
   const handleSave = async (template) => {
     const templateToSave = template || activeTemplate;
+
     if (!templateToSave) return;
 
     setSavingTemplateId(templateToSave._id);
@@ -209,6 +214,7 @@ export default function SurveyTemplateManager() {
       setTemplates((prev) =>
         (prev || []).filter((template) => template._id !== activeTemplate._id)
       );
+
       setShowRemoveConfirm(false);
     } catch (error) {
       toast.error(error?.response?.data?.message || 'Failed to remove survey template');
@@ -223,18 +229,17 @@ export default function SurveyTemplateManager() {
 
   return (
     <div className="survey-manager-simplified">
-      {/* Header */}
       <div className="card manager-header">
         <div>
           <h1>Survey Configuration</h1>
           <p className="header-desc">Create and manage surveys for your quiz</p>
         </div>
+
         <a className="text-link" href={integrationLinks.quizBack}>
           ← Back to Quiz
         </a>
       </div>
 
-      {/* Quick Status */}
       <div className="quick-status">
         <div className="status-item">
           <span className="status-label">Before Exam</span>
@@ -242,6 +247,7 @@ export default function SurveyTemplateManager() {
             {hasPreTemplate ? '✓ Ready' : '○ Not Created'}
           </span>
         </div>
+
         <div className="status-item">
           <span className="status-label">After Exam</span>
           <span className={`status-badge ${hasPostTemplate ? 'ready' : 'empty'}`}>
@@ -250,32 +256,47 @@ export default function SurveyTemplateManager() {
         </div>
       </div>
 
-      {/* Integration Links - Simplified */}
       <div className="card">
         <h2>Integration Links</h2>
         <p className="section-desc">Use these links to share surveys</p>
+
         <div className="links-grid">
-          <button type="button" className="link-button" onClick={() => copyLink(integrationLinks.pre)}>
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => copyLink(integrationLinks.pre)}
+          >
             <div className="link-icon">📋</div>
             <div>
               <div className="link-title">Before Exam</div>
               <div className="link-hint">Copy survey link</div>
             </div>
           </button>
-          <button type="button" className="link-button" onClick={() => copyLink(integrationLinks.post)}>
+
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => copyLink(integrationLinks.post)}
+          >
             <div className="link-icon">📋</div>
             <div>
               <div className="link-title">After Exam</div>
               <div className="link-hint">Copy survey link</div>
             </div>
           </button>
-          <button type="button" className="link-button" onClick={() => copyLink(integrationLinks.setup)}>
+
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => copyLink(integrationLinks.setup)}
+          >
             <div className="link-icon">⚙️</div>
             <div>
               <div className="link-title">Setup</div>
               <div className="link-hint">Copy setup link</div>
             </div>
           </button>
+
           <a href={integrationLinks.report} className="link-button">
             <div className="link-icon">📊</div>
             <div>
@@ -286,7 +307,6 @@ export default function SurveyTemplateManager() {
         </div>
       </div>
 
-      {/* Tab Navigation - Simplified */}
       <div className="card">
         <div className="tab-nav-simple">
           {SURVEY_TABS.map((tab) => {
@@ -310,11 +330,11 @@ export default function SurveyTemplateManager() {
         </div>
       </div>
 
-      {/* Create Templates Section - if needed */}
       {!hasPreTemplate || !hasPostTemplate ? (
         <div className="card create-section">
           <h2>Get Started</h2>
           <p className="section-desc">Create survey templates to begin</p>
+
           <div className="create-buttons">
             {!hasPreTemplate && (
               <button
@@ -341,10 +361,10 @@ export default function SurveyTemplateManager() {
             )}
 
             {!hasPreTemplate && !hasPostTemplate && (
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="btn-create primary"
-                onClick={handleCreateBothDefaults} 
+                onClick={handleCreateBothDefaults}
                 disabled={loadingDefaults}
               >
                 <span className="btn-emoji">✨</span>
@@ -355,13 +375,13 @@ export default function SurveyTemplateManager() {
         </div>
       ) : null}
 
-      {/* Active Template Section */}
       <div className="card template-section">
         <div className="template-header">
           <div>
             <h2>{activeTabMeta?.label}</h2>
             <p className="section-desc">{activeTabMeta?.description}</p>
           </div>
+
           {activeTemplate && (
             <button
               type="button"
@@ -375,11 +395,11 @@ export default function SurveyTemplateManager() {
         </div>
       </div>
 
-      {/* Confirmation Dialog */}
       {showRemoveConfirm && activeTemplate ? (
         <div className="card danger-confirm">
           <h3>Remove Survey?</h3>
-          <p>Existing responses will be kept. Students won't see this survey anymore.</p>
+          <p>Existing responses will be kept. Students won&apos;t see this survey anymore.</p>
+
           <div className="confirm-actions">
             <button
               type="button"
@@ -389,6 +409,7 @@ export default function SurveyTemplateManager() {
             >
               Cancel
             </button>
+
             <button
               type="button"
               className="btn-danger"
@@ -401,7 +422,6 @@ export default function SurveyTemplateManager() {
         </div>
       ) : null}
 
-      {/* Survey Template Form */}
       {activeTemplate ? (
         <SimpleSurveyTemplateForm
           template={activeTemplate}
@@ -411,10 +431,9 @@ export default function SurveyTemplateManager() {
       ) : (
         <div className="card empty-template">
           <div className="empty-icon">📋</div>
+
           <h3>
-            {activeTab === 'preExam'
-              ? 'Before Exam Survey'
-              : 'After Exam Survey'} not created yet
+            {activeTab === 'preExam' ? 'Before Exam Survey' : 'After Exam Survey'} not created yet
           </h3>
 
           <p>Create this template to add questions for this survey.</p>

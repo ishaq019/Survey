@@ -1,4 +1,4 @@
-name: Deploy React to GitHub Pages
+name: Deploy Survey Frontend to GitHub Pages
 
 on:
   push:
@@ -19,45 +19,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
 
-      - name: Build project
+      - name: Build frontend for /survey path
         working-directory: frontend
         run: npm run build
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
-          VITE_SURVEY_APP_URL: ${{ vars.VITE_SURVEY_APP_URL }}
+          VITE_QUIZ_APP_URL: ${{ vars.VITE_QUIZ_APP_URL }}
+          VITE_APP_BASE_PATH: /survey
 
-      - name: Prepare /survey publish folder
+      - name: Prepare GitHub Pages artifact
         working-directory: frontend
         run: |
-          mkdir -p dist/survey
-          for item in dist/*; do
-            if [ "$item" != "dist/survey" ]; then
-              mv "$item" dist/survey/
-            fi
-          done
+          rm -rf pages
+          mkdir -p pages/survey
+          cp -R dist/. pages/survey/
+          cp pages/survey/index.html pages/survey/404.html
+          cp pages/survey/index.html pages/404.html
 
-      - name: Add SPA fallback
-        working-directory: frontend
-        run: cp dist/survey/index.html dist/survey/404.html
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/dist
+          path: frontend/pages
 
   deploy:
     runs-on: ubuntu-latest
