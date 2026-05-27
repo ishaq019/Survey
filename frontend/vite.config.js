@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const normalizeBase = (value) => {
-  const raw = String(value || '/survey').trim();
+  const raw = String(value || '/Survey').trim();
 
   if (raw === './' || raw === '/') {
     return raw;
