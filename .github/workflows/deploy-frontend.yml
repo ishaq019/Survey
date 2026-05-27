@@ -49,6 +49,7 @@ jobs:
           cp -R dist/. pages/survey/
           cp pages/survey/index.html pages/survey/404.html
           cp pages/survey/index.html pages/404.html
+          echo "syedishaq.me" > pages/CNAME
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
