@@ -9,7 +9,10 @@ import { ThemeProvider } from './context/ThemeContext';
 import { APP_BASE_PATH } from './utils/appPaths';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename={APP_BASE_PATH}>
+  <BrowserRouter
+    basename={APP_BASE_PATH}
+    future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+  >
     <ThemeProvider>
       <App />
       <ToastContainer position="top-right" autoClose={2000} />

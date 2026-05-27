@@ -40,9 +40,19 @@ jobs:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_SURVEY_APP_URL: ${{ vars.VITE_SURVEY_APP_URL }}
 
+      - name: Prepare /survey publish folder
+        working-directory: frontend
+        run: |
+          mkdir -p dist/survey
+          for item in dist/*; do
+            if [ "$item" != "dist/survey" ]; then
+              mv "$item" dist/survey/
+            fi
+          done
+
       - name: Add SPA fallback
         working-directory: frontend
-        run: cp dist/index.html dist/404.html
+        run: cp dist/survey/index.html dist/survey/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -8,7 +8,21 @@ const normalizeBasePath = (value) => {
   return `/${raw.replace(/^\/+|\/+$/g, '')}`;
 };
 
-export const APP_BASE_PATH = normalizeBasePath(import.meta.env.VITE_APP_BASE_PATH || '/survey');
+const inferBasePath = () => {
+  if (typeof window === 'undefined') {
+    return '/';
+  }
+
+  const pathname = window.location.pathname;
+  const knownBasePaths = ['/survey', '/exam'];
+  const match = knownBasePaths.find(
+    (basePath) => pathname === basePath || pathname.startsWith(`${basePath}/`),
+  );
+
+  return match || '/';
+};
+
+export const APP_BASE_PATH = normalizeBasePath(import.meta.env.VITE_APP_BASE_PATH || inferBasePath());
 
 export const buildAppPath = (path = '') => {
   const normalizedPath = path ? (path.startsWith('/') ? path : `/${path}`) : '';
