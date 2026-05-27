@@ -33,22 +33,22 @@ jobs:
         working-directory: frontend
         run: npm install
 
-      - name: Build frontend for /survey path
+      - name: Build frontend for /Survey path
         working-directory: frontend
         run: npm run build
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_QUIZ_APP_URL: ${{ vars.VITE_QUIZ_APP_URL }}
-          VITE_APP_BASE_PATH: /survey
+          VITE_APP_BASE_PATH: /Survey
 
       - name: Prepare GitHub Pages artifact
         working-directory: frontend
         run: |
           rm -rf pages
-          mkdir -p pages/survey
-          cp -R dist/. pages/survey/
-          cp pages/survey/index.html pages/survey/404.html
-          cp pages/survey/index.html pages/404.html
+          mkdir -p pages/Survey
+          cp -R dist/. pages/Survey/
+          cp pages/Survey/index.html pages/Survey/404.html
+          cp pages/Survey/index.html pages/404.html
           echo "syedishaq.me" > pages/CNAME
 
       - name: Configure GitHub Pages
