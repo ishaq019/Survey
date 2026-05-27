@@ -12,6 +12,6 @@ const normalizeBase = (value) => {
 };
 
 export default defineConfig({
-  base: normalizeBase(process.env.VITE_APP_BASE_PATH),
+  base: "/Survey/",
   plugins: [react()],
 });
